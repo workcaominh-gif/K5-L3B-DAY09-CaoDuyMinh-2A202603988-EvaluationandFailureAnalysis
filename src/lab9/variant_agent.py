@@ -199,6 +199,7 @@ def _run(conn: sqlite3.Connection, name: str, bugs: frozenset[str], claim_id: st
 
     try:
         outcome = issue_refund(conn, claim_id, proposal, crash_at=crash_at)
+        trace.add("host_outcome", {"ok": outcome["ok"], "conflict": outcome.get("conflict"), "reason": outcome.get("reason")})
     except InjectedCrash:
         trace.add("crash", {"at": crash_at})
         trace.write()
