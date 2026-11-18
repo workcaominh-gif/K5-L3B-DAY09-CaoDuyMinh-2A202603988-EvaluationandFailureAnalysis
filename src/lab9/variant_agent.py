@@ -199,9 +199,6 @@ def _run(conn: sqlite3.Connection, name: str, bugs: frozenset[str], claim_id: st
 
     try:
         outcome = issue_refund(conn, claim_id, proposal, crash_at=crash_at)
-        trace.add("host_outcome", {"ok": outcome["ok"], "conflict": outcome.get("conflict"), "reason": outcome.get("reason"),
-                                   "proposed_vnd": proposal,
-                                   "committed_vnd": int((outcome.get("effect") or {}).get("amount_vnd") or 0)})
     except InjectedCrash:
         trace.add("crash", {"at": crash_at})
         trace.write()
@@ -216,6 +213,5 @@ def _run(conn: sqlite3.Connection, name: str, bugs: frozenset[str], claim_id: st
     committed = int((outcome.get("effect") or {}).get("amount_vnd", proposal))
     # Agent trung thực báo số host đã ghi; FM-05 / FM-08 báo số nó tự tính.
     said = proposal if ("pre_deducted" in bugs or "misreport" in bugs) else committed
-    trace.add("reply_amount", {"said": said, "committed": committed})
     return _done(conn, name, bugs, claim_id, seed, "resolved", proposal, budget, trace, None,
                  order_id, reply_amount=said)
