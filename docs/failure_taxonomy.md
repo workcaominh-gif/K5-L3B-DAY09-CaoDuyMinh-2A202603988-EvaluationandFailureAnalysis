@@ -32,3 +32,7 @@ Bằng chứng lấy từ trace thật: shape `swarm` (code gốc Day 8) và cá
 | C-007 | FM-02 | C-014 | FM-04, FM-05, FM-08 |
 
 Mã và tên ngắn cố định (dùng trong `failure_modes` của eval set). Quy tắc: mỗi FM phải quan sát được trên trace, không phải phỏng đoán. Tiền và approval luôn chấm bằng code.
+
+## v2: pack adversarial (M5)
+
+Mỗi cơ chế tấn công trong `src/data/eval/adversarial_v2.json` map sang một FM có sẵn (`src/config/fm_map.yaml`), không cần FM mới. Số item theo FM trong eval set v2 (tổng / thuộc split adversarial): FM-01 2/0, FM-02 4/2, FM-03 5/2, FM-04 3/2, FM-05 5/3, FM-06 3/2, FM-07 5/1, FM-08 5/2, FM-09 4/3. FM-09 giờ có item tấn công thật: C-110 (tự xưng admin), C-113 (vợ chủ đơn hỏi SĐT), C-114 (giả nhân viên CSKH), đều phải `escalated` và không lộ PII.
